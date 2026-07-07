@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Himara Summer Camp</title>
+  <style>
+    :root {
+      --blue: #0ea5e9;
+      --blue-dark: #0369a1;
+      --green: #22c55e;
+      --yellow: #fbbf24;
+      --orange: #fb923c;
+      --cream: #fffdf7;
+      --dark: #0f172a;
+      --muted: #64748b;
+      --white: #ffffff;
+      --shadow: 0 14px 35px rgba(15, 23, 42, 0.12);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--dark);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+
+    header {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding: 110px 20px 90px;
+      background:
+        linear-gradient(135deg, rgba(3, 105, 161, 0.85), rgba(14, 165, 233, 0.45)),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 90px;
+      background: var(--cream);
+      clip-path: ellipse(70% 60% at 50% 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 950px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-weight: bold;
+      backdrop-filter: blur(10px);
+      margin-bottom: 18px;
+    }
+
+    header h1 {
+      font-size: clamp(42px, 8vw, 82px);
+      margin: 0;
+      line-height: 1;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+    }
+
+    header p {
+      font-size: clamp(18px, 2.5vw, 25px);
+      max-width: 780px;
+      margin: 22px auto 0;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      background: var(--yellow);
+      color: var(--dark);
+      padding: 15px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 10px 20px rgba(251, 191, 36, 0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(251, 191, 36, 0.35);
+    }
+
+    .hero-tags {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 14px;
+      margin: 36px auto 0;
+      max-width: 850px;
+    }
+
+    .hero-tag {
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 18px;
+      padding: 14px;
+      font-weight: bold;
+      backdrop-filter: blur(10px);
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px 20px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(15, 23, 42, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+    }
+
+    nav a {
+      margin: 0 12px;
+      color: var(--blue-dark);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 70px 20px;
+      max-width: 1120px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: clamp(30px, 4vw, 44px);
+      color: var(--blue-dark);
+      margin: 0 0 16px;
+      letter-spacing: -1px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 36px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .info-grid, .cards, .turn-grid, .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .info-box, .card, .turn-card, .why-card, form {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .info-box {
+      padding: 24px;
+      text-align: center;
+      border: 1px solid #e0f2fe;
+    }
+
+    .info-box strong {
+      color: var(--green);
+      display: block;
+      font-size: 21px;
+      margin-bottom: 6px;
+    }
+
+    .highlight {
+      background: linear-gradient(135deg, #e0f2fe, #fef3c7);
+      border-left: 7px solid var(--blue);
+      padding: 24px;
+      border-radius: var(--radius);
+      margin-top: 28px;
+      font-size: 18px;
+    }
+
+    .card, .why-card {
+      padding: 28px;
+      transition: transform 0.2s ease;
+      border: 1px solid #f1f5f9;
+    }
+
+    .card:hover, .why-card:hover, .turn-card:hover { transform: translateY(-5px); }
+
+    .icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: #e0f2fe;
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    .card h3, .why-card h3 {
+      margin: 0 0 10px;
+      color: var(--orange);
+      font-size: 22px;
+    }
+
+    .offer {
+      background: linear-gradient(135deg, #fef3c7, #ffffff);
+      border: 2px dashed var(--yellow);
+      padding: 30px;
+      border-radius: var(--radius);
+      text-align: center;
+      margin-top: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .offer h3 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      color: var(--dark);
+    }
+
+    .turn-card {
+      padding: 30px;
+      text-align: center;
+      border: 2px solid #e0f2fe;
+      transition: transform 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .turn-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, var(--blue), var(--green), var(--yellow));
+    }
+
+    .turn-card h3 {
+      color: var(--blue-dark);
+      font-size: 28px;
+      margin: 12px 0 6px;
+    }
+
+    .price {
+      font-size: 42px;
+      font-weight: bold;
+      color: var(--green);
+      margin: 14px 0;
+    }
+
+    form {
+      padding: 34px;
+      max-width: 820px;
+      margin: auto;
+      border: 1px solid #e2e8f0;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      border: 1px solid #cbd5e1;
+      margin-top: 7px;
+      font-size: 15px;
+      background: #ffffff;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 3px solid #bae6fd;
+      border-color: var(--blue);
+    }
+
+    .child-block {
+      margin-top: 22px;
+      padding: 20px;
+      border: 1px dashed var(--blue);
+      border-radius: 20px;
+      background: #f0f9ff;
+    }
+
+    .child-block h3 {
+      margin: 0 0 8px;
+      color: var(--blue-dark);
+    }
+
+    .hidden { display: none; }
+
+    .price-box {
+      margin-top: 24px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 20px;
+      padding: 22px;
+    }
+
+    .invoice-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    }
+
+    .invoice-total {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 12px;
+      margin-top: 8px;
+      font-size: 23px;
+      font-weight: bold;
+      color: var(--green);
+    }
+
+    button {
+      margin-top: 24px;
+      width: 100%;
+      border: none;
+      background: linear-gradient(135deg, var(--green), #16a34a);
+      color: white;
+      padding: 16px;
+      border-radius: 999px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(34, 197, 94, 0.22);
+    }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 38px 20px;
+    }
+
+    .footer-info {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: #22c55e;
+      color: white;
+      padding: 14px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.35);
+      z-index: 30;
+    }
+
+    @media (max-width: 760px) {
+      .hero-tags { grid-template-columns: repeat(2, 1fr); }
+      nav a { display: inline-block; margin: 6px 8px; }
+      section { padding: 52px 16px; }
+      form { padding: 22px; }
+    }
+
+    @media (max-width: 440px) {
+      .hero-tags { grid-template-columns: 1fr; }
+      .whatsapp-float { left: 18px; right: 18px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero-content">
+      <div class="badge">⭐ Regjistrimet janë të hapura</div>
+      <h1>Himara Summer Camp</h1>
+      <p>Një verë plot argëtim, miqësi dhe zhvillim për fëmijë tuaj.</p>
+      <a href="#regjistrimi" class="btn">Regjistrohu tani</a>
+
+      <div class="hero-tags">
+        <div class="hero-tag">📅 5 ditë</div>
+        <div class="hero-tag">👧 4–10 vjeç</div>
+        <div class="hero-tag">🏖️ Plazh i monitoruar</div>
+        <div class="hero-tag">👥 Vetëm 10 vende</div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#rreth">Rreth kampit</a>
+    <a href="#turnet">Turnet</a>
+    <a href="#aktivitetet">Aktivitetet</a>
+    <a href="#ushqimi">Ushqimi</a>
+    <a href="#regjistrimi">Regjistrimi</a>
+  </nav>
+
+  <section id="rreth">
+    <h2>Rreth Kampit</h2>
+    <p class="section-subtitle">Program i menduar për fëmijët që të argëtohen, të mësojnë, të krijojnë dhe të socializohen në një ambient të sigurt në Himarë.</p>
+
+    <div class="info-grid">
+      <div class="info-box"><strong>Muaji</strong>Gusht</div>
+      <div class="info-box"><strong>Mosha</strong>4–10 vjeç</div>
+      <div class="info-box"><strong>Orari</strong>09:00–15:00</div>
+      <div class="info-box"><strong>Grupi</strong>Maks. 10 fëmijë</div>
+      <div class="info-box"><strong>Tarifa</strong>150 € / turn</div>
+    </div>
+
+    <div class="highlight">
+      Kampi zhvillohet në turne 5-ditore dhe kombinon aktivitetet edukative, kreative, sportive dhe argëtuese. Aktivitetet në plazh zgjasin rreth 1–1.5 orë në ditë dhe zhvillohen gjithmonë nën mbikëqyrje.
+    </div>
+  </section>
+
+  <section id="turnet">
+    <h2>Turnet</h2>
+    <p class="section-subtitle">Zgjidhni periudhën që ju përshtatet më shumë. Çdo turn zgjat 5 ditë, nga e hëna në të premte.</p>
+
+    <div class="turn-grid">
+      <div class="turn-card">
+        <h3>Turni 1</h3>
+        <p>3–7 Gusht</p>
+        <p>09:00–15:00</p>
+        <div class="price">150 €</div>
+        <a class="btn" href="#regjistrimi" onclick="selectTurn('Turni 1: 3–7 Gusht')">Zgjidh Turnin 1</a>
+      </div>
+
+      <div class="turn-card">
+        <h3>Turni 2</h3>
+        <p>10–14 Gusht</p>
+        <p>09:00–15:00</p>
+        <div class="price">150 €</div>
+        <a class="btn" href="#regjistrimi" onclick="selectTurn('Turni 2: 10–14 Gusht')">Zgjidh Turnin 2</a>
+      </div>
+    </div>
+
+    <div class="offer">
+      <h3>🎉 Oferta Familjare</h3>
+      <p>Regjistro 2 ose më shumë fëmijë dhe përfito <strong>20% ulje për secilin fëmijë</strong>.</p>
+    </div>
+  </section>
+
+  <section id="aktivitetet">
+    <h2>Aktivitetet</h2>
+    <p class="section-subtitle">Çdo ditë ka një kombinim aktivitetesh kreative, edukative, lëvizore dhe sociale.</p>
+
+    <div class="cards">
+      <div class="card"><div class="icon">🎨</div><h3>Kreativitet</h3><p>Vizatim, pikturë, punime dore, teatër, tregime dhe muzikë.</p></div>
+      <div class="card"><div class="icon">🤝</div><h3>Zhvillim social</h3><p>Lojëra bashkëpunuese, komunikim, miqësi dhe punë në grup.</p></div>
+      <div class="card"><div class="icon">🧩</div><h3>Shkencë & logjikë</h3><p>Eksperimente të thjeshta, LEGO dhe lojëra logjike.</p></div>
+      <div class="card"><div class="icon">🏖️</div><h3>Sport & plazh</h3><p>Aktivitete lëvizore dhe plazh i monitoruar për rreth 1–1.5 orë.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pse të na zgjidhni?</h2>
+    <div class="why-grid">
+      <div class="why-card"><div class="icon">🛟</div><h3>Siguri</h3><p>Ambiente të kontrolluara dhe aktivitete të monitoruara.</p></div>
+      <div class="why-card"><div class="icon">👩‍🏫</div><h3>Vëmendje</h3><p>Grup i vogël me maksimumi 10 fëmijë për turn.</p></div>
+      <div class="why-card"><div class="icon">🌊</div><h3>Himarë</h3><p>Eksperiencë verore pranë detit dhe natyrës.</p></div>
+      
+    </div>
+  </section>
+
+  <section id="ushqimi">
+    <h2>Ushqimi</h2>
+    <div class="cards">
+      <div class="card"><div class="icon">🥪</div><h3>Dreka me vete</h3><p>Çdo fëmijë duhet të sjellë me vete drekën dhe një shishe uji për konsum gjatë ditës.</p></div>
+      <div class="card"><div class="icon">🍕</div><h3>Free Pizza Friday</h3><p>Çdo të premte, dreka ofrohet nga kampi pa kosto shtesë për të gjithë pjesëmarrësit.</p></div>
+    </div>
+  </section>
+
+  <section id="regjistrimi">
+    <h2>Regjistrimi</h2>
+    <p class="section-subtitle">Plotësoni formularin dhe regjistrimi dërgohet direkt në WhatsApp.</p>
+
+    <form onsubmit="sendWhatsApp(event)">
+      <label>Emri i prindit</label>
+      <input type="text" id="parentName" required />
+
+      <label>Numri i telefonit</label>
+      <input type="tel" id="phone" required />
+
+      <label>Zgjidh turnin</label>
+      <select id="turn" required onchange="calculatePrice()">
+        <option value="">Zgjidh datat</option>
+        <option>Turni 1: 3–7 Gusht</option>
+        <option>Turni 2: 10–14 Gusht</option>
+      </select>
+
+      <label>Numri i fëmijëve që do të regjistrohen</label>
+      <select id="childrenCount" onchange="updateChildrenFields(); calculatePrice();" required>
+        <option value="1">1 fëmijë</option>
+        <option value="2">2 fëmijë - aplikohet 20% ulje</option>
+        <option value="3">3 fëmijë - aplikohet 20% ulje</option>
+      </select>
+
+      <div class="child-block" id="child1Block">
+        <h3>Fëmija 1</h3>
+        <label>Emri i fëmijës</label>
+        <input type="text" id="childName1" required />
+        <label>Mosha e fëmijës</label>
+        <select id="age1" required>
+          <option value="">Zgjidh moshën</option>
+          <option>4 vjeç</option><option>5 vjeç</option><option>6 vjeç</option><option>7 vjeç</option><option>8 vjeç</option><option>9 vjeç</option><option>10 vjeç</option>
+        </select>
+      </div>
+
+      <div class="child-block hidden" id="child2Block">
+        <h3>Fëmija 2</h3>
+        <label>Emri i fëmijës</label>
+        <input type="text" id="childName2" />
+        <label>Mosha e fëmijës</label>
+        <select id="age2">
+          <option value="">Zgjidh moshën</option>
+          <option>4 vjeç</option><option>5 vjeç</option><option>6 vjeç</option><option>7 vjeç</option><option>8 vjeç</option><option>9 vjeç</option><option>10 vjeç</option>
+        </select>
+      </div>
+
+      <div class="child-block hidden" id="child3Block">
+        <h3>Fëmija 3</h3>
+        <label>Emri i fëmijës</label>
+        <input type="text" id="childName3" />
+        <label>Mosha e fëmijës</label>
+        <select id="age3">
+          <option value="">Zgjidh moshën</option>
+          <option>4 vjeç</option><option>5 vjeç</option><option>6 vjeç</option><option>7 vjeç</option><option>8 vjeç</option><option>9 vjeç</option><option>10 vjeç</option>
+        </select>
+      </div>
+
+      <div class="price-box" id="priceBox"></div>
+
+      <label>Shënime të tjera</label>
+      <textarea id="notes" rows="4" placeholder="Alergji, nevoja të veçanta ose informacione të tjera..."></textarea>
+
+      <button type="submit">Dërgo regjistrimin në WhatsApp</button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="footer-info">
+      <span>📍 Himarë</span>
+      <span>📞 WhatsApp</span>
+      <span>🌊 Summer Camp 2026</span>
+    </div>
+    <p>© 2026 Himara Summer Camp | Argëtim • Miqësi • Zhvillim</p>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/355699830138" target="_blank">💬 WhatsApp</a>
+
+  <script>
+    const basePrice = 150;
+    const discountRate = 0.20;
+
+    function selectTurn(turnValue) {
+      document.getElementById('turn').value = turnValue;
+      calculatePrice();
+    }
+
+    function updateChildrenFields() {
+      const count = parseInt(document.getElementById('childrenCount').value, 10);
+
+      for (let i = 2; i <= 3; i++) {
+        const block = document.getElementById(`child${i}Block`);
+        const name = document.getElementById(`childName${i}`);
+        const age = document.getElementById(`age${i}`);
+
+        if (i <= count) {
+          block.classList.remove('hidden');
+          name.required = true;
+          age.required = true;
+        } else {
+          block.classList.add('hidden');
+          name.required = false;
+          age.required = false;
+          name.value = '';
+          age.value = '';
+        }
+      }
+    }
+
+    function calculatePrice() {
+      const count = parseInt(document.getElementById('childrenCount').value, 10);
+      const priceBox = document.getElementById('priceBox');
+      const regularTotal = basePrice * count;
+      const discount = count > 1 ? regularTotal * discountRate : 0;
+      const total = regularTotal - discount;
+      const discountedPrice = count > 1 ? basePrice * (1 - discountRate) : basePrice;
+
+      priceBox.innerHTML = `
+        <div class="invoice-row"><span>Tarifa standarde</span><strong>${basePrice} €</strong></div>
+        <div class="invoice-row"><span>Numri i fëmijëve</span><strong>${count}</strong></div>
+        <div class="invoice-row"><span>Nëntotali</span><strong>${regularTotal} €</strong></div>
+        <div class="invoice-row"><span>Ulja familjare 20%</span><strong>-${discount} €</strong></div>
+        ${count > 1 ? `<div class="invoice-row"><span>Tarifa me ulje për fëmijë</span><strong>${discountedPrice} €</strong></div>` : ''}
+        <div class="invoice-total"><span>Totali</span><span>${total} €</span></div>
+      `;
+    }
+
+    function sendWhatsApp(event) {
+      event.preventDefault();
+
+      const parentName = document.getElementById('parentName').value;
+      const phone = document.getElementById('phone').value;
+      const turn = document.getElementById('turn').value;
+      const childrenCount = parseInt(document.getElementById('childrenCount').value, 10);
+      const notes = document.getElementById('notes').value || 'Nuk ka';
+
+      const regularTotal = basePrice * childrenCount;
+      const discount = childrenCount > 1 ? regularTotal * discountRate : 0;
+      const total = regularTotal - discount;
+      const pricePerChild = childrenCount > 1 ? basePrice * (1 - discountRate) : basePrice;
+
+      let childrenDetails = '';
+      for (let i = 1; i <= childrenCount; i++) {
+        const childName = document.getElementById(`childName${i}`).value;
+        const age = document.getElementById(`age${i}`).value;
+        childrenDetails += `%0AFëmija ${i}: ${childName}, ${age}`;
+      }
+
+      const discountText = childrenCount > 1 ? 'Po, aplikohet ulje 20%' : 'Jo';
+
+      const message = `Përshëndetje! Dua të regjistroj fëmijën/fëmijët në Himara Summer Camp.%0A%0AEmri i prindit: ${parentName}%0ATelefoni: ${phone}%0ATurni: ${turn}%0ANumri i fëmijëve: ${childrenCount}${childrenDetails}%0AUlja familjare: ${discountText}%0ATarifa për fëmijë: ${pricePerChild} €%0ATotali: ${total} €%0AShënime: ${notes}`;
+
+      const whatsappNumber = '355699830138';
+      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+    }
+
+    updateChildrenFields();
+    calculatePrice();
+  </script>
+</body>
+</html>
